@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Trophy, Menu, X, Search, User, Home, Target, TrendingUp, BarChart3 } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Trophy, Menu, X, Search, User, Home, Target, TrendingUp, BarChart3, LogIn, UserRoundPen, UserStar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router';
+import { useUser } from '../../hooks/useUser';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,14 +18,15 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isAdmin = user?.role === 'admin';
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg' : 'bg-white shadow-md'
-    }`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg' : 'bg-white shadow-md'
+      }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center gap-3 cursor-pointer group">
+          <div className="flex items-center gap-3 group">
             <div className="bg-gray-900 p-2 rounded-lg group-hover:bg-gray-800 transition-colors">
               <Trophy className="w-6 h-6 text-white" />
             </div>
@@ -34,10 +37,10 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            <a href="#" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
+            <Link to="/" href="#" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
               <Home className="w-4 h-4" />
               Home
-            </a>
+            </Link>
             <a href="#" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
               <Target className="w-4 h-4" />
               Challenges
@@ -55,29 +58,56 @@ export default function Header() {
           {/* Right side actions */}
           <div className="hidden lg:flex items-center gap-3">
             {/* Search button */}
-            <button 
+            <button
               onClick={() => setSearchOpen(!searchOpen)}
               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
             >
               <Search className="w-5 h-5" />
             </button>
-
             {/* User section */}
-            {isLoggedIn ? (
-              <div className="flex items-center gap-3 pl-3 border-l border-gray-200">
-                <div className="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-800 transition-colors">
-                  <span className="text-white font-bold text-sm">UA</span>
-                </div>
-              </div>
-            ) : (
-              <button 
-                onClick={() => setIsLoggedIn(true)}
-                className="px-6 py-2.5 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-2 cursor-pointer"
+            {!user && (
+              <Link to="/register"
+                className="px-6 py-2.5 bg-transparent border border-gray-600 text-gray-600 font-semibold rounded-lg
+                        hover:bg-gray-800 hover:text-white
+                          transition-colors duration-300 flex items-center gap-2 cursor-pointer"
               >
-                <User className="w-4 h-4" />
-                Login
-              </button>
+                <UserRoundPen className="w-4 h-4" />
+                Register
+              </Link>
             )}
+            {!user && (
+              <Link to="/login"
+                className="px-6 py-2.5 bg-transparent border border-gray-600 text-gray-600 font-semibold rounded-lg
+                        hover:bg-gray-800 hover:text-white
+                          transition-colors duration-300 flex items-center gap-2 cursor-pointer"
+              >
+                <LogIn className="w-4 h-4" />
+                Login
+              </Link>
+            )}
+            {isAdmin && (
+              <>
+                <Link to="/admin"
+                  className="px-6 py-2.5 bg-transparent border border-gray-600 text-gray-600 font-semibold rounded-lg
+                        hover:bg-gray-800 hover:text-white
+                          transition-colors duration-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Admin Panel
+                </Link>
+                <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100">
+                  <UserStar className="w-5 h-5" />
+                  {user.name}
+                </Link>
+              </>
+            )}
+            {user && !isAdmin && (
+              <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100">
+                <User className="w-5 h-5" />
+                {user.name}
+              </Link>
+            )}
+
           </div>
 
           {/* Mobile Menu Button */}
@@ -108,7 +138,7 @@ export default function Header() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-            <motion.div
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -131,13 +161,58 @@ export default function Header() {
                 <BarChart3 className="w-5 h-5" />
                 Statistics
               </a>
-              <button className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors mt-4">
-                <User className="w-5 h-5" />
-                Login / Register
-              </button>
+              {!user && (
+                <Link to="/register"
+                  className="px-6 py-2.5 bg-transparent border border-gray-600 text-gray-600 font-semibold rounded-lg
+                        hover:bg-gray-800 hover:text-white
+                          transition-colors duration-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <User className="w-4 h-4" />
+                  Register
+                </Link>
+              )}
+              {!user && (
+                <Link to="/login"
+                  className="px-6 py-2.5 bg-transparent border border-gray-600 text-gray-600 font-semibold rounded-lg
+                        hover:bg-gray-800 hover:text-white
+                          transition-colors duration-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Login
+                </Link>
+              )}
+              <hr />
+              {user && !isAdmin && (
+                <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100">
+                  <User className="w-5 h-5" />
+                  {user.name}
+                </Link>
+              )}
+              {isAdmin && (
+                <>
+                  <Link to="/admin"
+                    className="px-6 py-2.5 bg-transparent border border-gray-600 text-gray-600 font-semibold rounded-lg
+                            hover:bg-gray-800 hover:text-white
+                              transition-colors duration-300 flex items-center gap-2 cursor-pointer"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Admin Panel
+                  </Link>
+                  <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100">
+                    <UserStar className="w-5 h-5" />
+                    {user.name}
+                  </Link>
+                </>
+              )}
+              {user && !isAdmin && (
+                <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100">
+                  <User className="w-5 h-5" />
+                  {user.name}
+                </Link>
+              )}
             </nav>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
       </AnimatePresence>
     </header>
   );

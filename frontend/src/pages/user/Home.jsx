@@ -107,12 +107,12 @@ export default function MainPage() {
     }
   ];
 
-  const filteredChallenges = filter === 'all' 
-    ? challenges 
+  const filteredChallenges = filter === 'all'
+    ? challenges
     : challenges.filter(c => c.category === filter);
 
   const getDifficultyColor = (difficulty) => {
-    switch(difficulty) {
+    switch (difficulty) {
       case 'Easy': return 'text-green-600 bg-green-100 border-green-200';
       case 'Medium': return 'text-yellow-600 bg-yellow-100 border-yellow-200';
       case 'Hard': return 'text-red-600 bg-red-100 border-red-200';
@@ -135,18 +135,18 @@ export default function MainPage() {
               <Flame className="w-4 h-4" />
               <span>Join thousands of active users</span>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
               Take part in challenges<br />
               <span className="text-white">
                 and achieve new goals
               </span>
             </h1>
-            
+
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
               Grow every day, track progress and win together with the community
             </p>
-            
+
             <div className="flex flex-wrap justify-center gap-4 pt-6">
               <button className="px-8 py-4 bg-white text-gray-900 font-bold rounded-lg hover:bg-gray-100 transition-all shadow-lg flex items-center gap-2 text-lg cursor-pointer">
                 Join now
@@ -191,10 +191,10 @@ export default function MainPage() {
               <div className="w-24 h-24">
                 <svg className="transform -rotate-90" viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="40" stroke="#e5e7eb" strokeWidth="8" fill="none" />
-                  <circle 
-                    cx="50" cy="50" r="40" 
-                    stroke="#000000" 
-                    strokeWidth="8" 
+                  <circle
+                    cx="50" cy="50" r="40"
+                    stroke="#000000"
+                    strokeWidth="8"
                     fill="none"
                     strokeDasharray={`${userProgress * 2.51} 251`}
                     strokeLinecap="round"
@@ -230,7 +230,7 @@ export default function MainPage() {
             Choose a category and start your path to success
           </p>
         </div>
-        
+
         <div className="flex flex-wrap gap-3 justify-center">
           {categories.map(category => {
             const Icon = category.icon;
@@ -238,11 +238,10 @@ export default function MainPage() {
               <button
                 key={category.id}
                 onClick={() => setFilter(category.id)}
-                className={`px-6 py-3 rounded-lg font-semibold transition-all flex items-center gap-2 cursor-pointer ${
-                  filter === category.id 
-                    ? 'bg-gray-900 text-white shadow-md' 
+                className={`px-6 py-3 rounded-lg font-semibold transition-all flex items-center gap-2 cursor-pointer ${filter === category.id
+                    ? 'bg-gray-900 text-white shadow-md'
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-                }`}
+                  }`}
               >
                 <Icon className="w-4 h-4" />
                 {category.name}
@@ -256,7 +255,7 @@ export default function MainPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredChallenges.map(challenge => (
-            <div 
+            <div
               key={challenge.id}
               className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group border border-gray-200"
             >
@@ -266,7 +265,7 @@ export default function MainPage() {
                   TRENDING
                 </div>
               )}
-              
+
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="text-5xl">{challenge.icon}</div>

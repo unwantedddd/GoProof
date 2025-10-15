@@ -99,6 +99,8 @@ GoProof/
    POSTGRES_USER=username
    POSTGRES_PASSWORD=password
    POSTGRES_DB=GoProof
+
+   JWT_SECRET=jwt_token
    ```
 
 4. Запустіть сервер:
