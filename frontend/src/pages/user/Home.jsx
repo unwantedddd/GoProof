@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Target, Zap, Award, Star, CheckCircle, TrendingUp, Clock, Users, Flame, ArrowRight, Quote, Trophy, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router';
 
 export default function MainPage() {
   const [filter, setFilter] = useState('all');
@@ -148,13 +149,12 @@ export default function MainPage() {
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 pt-6">
-              <button className="px-8 py-4 bg-white text-gray-900 font-bold rounded-lg hover:bg-gray-100 transition-all shadow-lg flex items-center gap-2 text-lg cursor-pointer">
-                Join now
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="px-8 py-4 bg-transparent text-white font-bold rounded-lg hover:bg-white/10 transition-all border-2 border-white/30 flex items-center gap-2 text-lg cursor-pointer">
-                Learn more
-              </button>
+              <Link to ="/register">
+                <button className="px-8 py-4 bg-white text-gray-900 font-bold rounded-lg hover:bg-gray-100 transition-all shadow-lg flex items-center gap-2 text-lg cursor-pointer">
+                  Join now
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </Link>
             </div>
 
             <div className="grid grid-cols-3 gap-8 pt-12 max-w-3xl mx-auto">

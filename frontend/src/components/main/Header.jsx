@@ -41,18 +41,18 @@ export default function Header() {
               <Home className="w-4 h-4" />
               Home
             </Link>
-            <a href="#" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
+            <Link to="/challenges" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
               <Target className="w-4 h-4" />
               Challenges
-            </a>
-            <a href="#" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
+            </Link>
+            <Link to="/myprogress" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               My Progress
-            </a>
-            <a href="#" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
+            </Link>
+            <Link to="/statistics" className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors rounded-lg hover:bg-gray-100 flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               Statistics
-            </a>
+            </Link>
           </nav>
 
           {/* Right side actions */}
@@ -145,10 +145,10 @@ export default function Header() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="lg:hidden bg-white border-t border-gray-200 shadow-xl">
             <nav className="flex flex-col p-4 space-y-2">
-              <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
+              <Link to="/" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
                 <Home className="w-5 h-5" />
                 Home
-              </a>
+              </Link>
               <a href="#" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg font-medium">
                 <Target className="w-5 h-5" />
                 Challenges

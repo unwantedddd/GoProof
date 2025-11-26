@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { connectDB } from './db/db.js';
 import authRouter from './routes/auth.route.js';
 import profileRouter from './routes/profile.route.js';
+import challengeRouter from './routes/challenge.route.js';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRouter);
 app.use('/api/profile', profileRouter);
+app.use('/api/challenges', challengeRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello from GoProof backend!');
